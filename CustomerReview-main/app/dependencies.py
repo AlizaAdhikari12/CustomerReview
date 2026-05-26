@@ -26,12 +26,6 @@ def get_currentuser(
             detail = "Invalid or expired token"
         )
 
-def require_customer(current_user: dict = Depends(get_currentuser)):
-    if current_user.get('role')!="User":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail = "Must be login as User to fill the review form"
-        )
 
 def require_admin(current_user : dict = Depends(get_currentuser)):
     if current_user.get('role')!="Admin":
