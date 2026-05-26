@@ -8,19 +8,15 @@ load_dotenv()
 DB_NAME = os.getenv("DB_NAME")
 DB_SERVER = os.getenv("DB_SERVER")
 DB_DRIVER = os.getenv("DB_DRIVER")
-DB_USER = os.getenv("DB_USER")
-DB_PWD = oss.getenv("DB_PASSWORD")
 
 #for connection
-def get_connection(db_name = DB_NAME):
+def get_connection():
     return pyodbc.connect(
         f"DRIVER={{{DB_DRIVER}}};"
         f"SERVER={DB_SERVER};"
-        f"Database={DB_NAME};"
-        f"UID= {DB_USER};"
-        f"PWD ={DB_PWD;}"
-        F"Trusted_Connection=yes;"
-        F"TrustServerCertificate=yes;",
+        f"DATABASE={DB_NAME};"
+        f"Trusted_Connection=yes;"
+        f"TrustServerCertificate=yes;",
         autocommit=True
     )
 
@@ -30,9 +26,9 @@ def create_database():
     conn = pyodbc.connect(
         f"DRIVER={{{DB_DRIVER}}};"
         f"SERVER={DB_SERVER};"
-        "DATABASE=master;"
-        "Trusted_Connection=yes;"
-        "TrustServerCertificate=yes;",
+        f"DATABASE=master;"
+        f"Trusted_Connection=yes;"
+        f"TrustServerCertificate=yes;",
         autocommit=True
 
         )
@@ -69,7 +65,7 @@ def create_table():
         id INT Identity(1,1) PRIMARY KEY,
         FullName NVARCHAR(100) NOT NULL,
         Email NVARCHAR(100) NOT NULL UNIQUE,
-        PassowrdHash NVARCHAR(255) NOT NULL,
+        PasswordHash NVARCHAR(255) NOT NULL,
         Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin','User')),
         CreateDate DATETIME DEFAULT GETDATE()
     )""")

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes import auth_route, admin_route,review_route
+from app.routes import auth_route, admin_route,review_route
 
 app = FastAPI(
     title = "Customer Review analyzer", 
@@ -24,5 +24,3 @@ app.include_router(admin_route.router,
 
 @app.get("/",tags=["Health"])
 
-def home():
-    return {"message": "Customer Review Analyzer is running"}
