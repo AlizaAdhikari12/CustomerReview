@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 import json
 from pydantic import BaseModel
 from app.create_database import get_connection
-from app.dependencies import get_currentuser
+from app.dependencies import get_currentuser, require_customer
 from app.ai_analyzer import analyze_review
 
 
@@ -14,7 +14,7 @@ class ReviewReport(BaseModel):
     ReviewText : str
 
 @router.post("/")
-def submit_review(req : ReviewReport, current_user : dict = Depends(get_currentuser)):
+def submit_review(req : ReviewReport, current_user : dict = Depends(require_customer)):
     result = analyze_review(req.ReviewText)
     print(result)
     conn = get_connection()
@@ -56,7 +56,7 @@ class viewReport(BaseModel):
     CustomerName : str
 
 @router.get("/my")
-def my_review(current_user: dict = Depends(get_currentuser)):
+def my_review(current_user: dict = Depends(require_customer)):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(

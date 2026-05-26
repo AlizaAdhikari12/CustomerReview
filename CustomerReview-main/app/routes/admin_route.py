@@ -19,7 +19,6 @@ def all_reviews(admin: dict = Depends(require_admin)):
     )
     rows = cur.fetchall()
     columns = [c[0] for c in cur.description]
-    print(columns)
     conn.close()
 
     return(
