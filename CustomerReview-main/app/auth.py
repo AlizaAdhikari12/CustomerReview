@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 pwd_context = CryptContext(
-    schemes = ['bcrypt'],deprecated='auto')
+    schemes = ['bcrypt'],deprecated='auto'
+)
 SECRET_KEY = os.getenv("JWT_SECRET")
 ALGORITHM = "HS256"
 

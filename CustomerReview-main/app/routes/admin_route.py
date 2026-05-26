@@ -55,7 +55,3 @@ def dashboard(admin : dict = Depends(require_admin)):
         "sentimentSummary" : sentiment,
         "CategorySummary": category
     }
-
-
-def admin():
-    print("test")

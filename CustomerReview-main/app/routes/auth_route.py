@@ -23,18 +23,25 @@ def register(req : RegisterRequest):
     if req.role not in ['Admin' , "User"]:
         raise HTTPException(status_code = 400, detail ="Invalid role")
 
-
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT Id FROM Users WHERE Email = ?" , (req.email,))
+
+    cur.execute("""
+    SELECT Id FROM Users 
+    WHERE Email = ?
+    """,
+     (req.email,))
     if cur.fetchone():
         raise HTTPException(status_code = 400, detail = "Email already exists")
 
-    cur.execute(
-        "Insert INTO Users (FullName, Email, PasswordHash,Role) VALUES (?,?,?,?)",
+    cur.execute("""
+        Insert INTO Users (FullName, Email, PasswordHash,Role)
+        VALUES
+        (?,?,?,?)
+        """,
         req.fullName
-        ,req.email,
-        hash_password(req.password),
+        ,req.email
+        ,hash_password(req.password),
         req.role
         )
 
@@ -48,7 +55,11 @@ def register(req : RegisterRequest):
 def login(req: LoginRequest):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("Select Id, fullName, Email, PasswordHash, Role FROM  Users WHERE Email = ?", (req.email,))
+    cur.execute("""
+    Select Id, fullName, Email, PasswordHash, Role FROM  Users
+    WHERE Email = ?
+    """,
+    (req.email,))
     user = cur.fetchone()
     conn.close()
 
@@ -75,5 +86,3 @@ def login(req: LoginRequest):
   
 }
     
-def auth():
-    return {"message":  "Auth route working"}

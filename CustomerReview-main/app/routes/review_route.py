@@ -79,10 +79,12 @@ def my_review(current_user: dict = Depends(get_currentuser)):
     rows = cur.fetchall()
     conn.close()
 
+
     return{
-        "message": "Test sucessful",
-        "reviews":dict(zip([c[0] for c in cur.description],row) for row in rows)
+        "message" :  "Test sucessful",
+        "review" : [dict(zip([c[0] for c in cur.description], row1)) for row1 in rows]
     }
+
 
 
 def review():

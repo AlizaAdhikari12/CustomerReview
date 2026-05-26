@@ -22,5 +22,3 @@ app.include_router(admin_route.router,
                     tags=['Admin'])
 
 
-@app.get("/",tags=["Health"])
-
